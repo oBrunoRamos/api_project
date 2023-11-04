@@ -19,6 +19,9 @@ class Person implements \JsonSerializable
     #[ORM\Column(length: 2000)]
     private ?string $bio = null;
 
+    #[ORM\ManyToOne(inversedBy: 'people')]
+    private ?Address $address = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -48,12 +51,24 @@ class Person implements \JsonSerializable
         return $this;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return[
             "id" => $this->getId(),
             "name" => $this->getName(),
             "bio" => $this->getBio(),
         ];
+    }
+
+    public function getAddress(): ?Address
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?Address $address): static
+    {
+        $this->address = $address;
+
+        return $this;
     }
 }
