@@ -18,6 +18,7 @@ class Address
     #[ORM\Column(length: 255)]
     private ?string $street = null;
 
+
     #[ORM\OneToMany(mappedBy: 'address', targetEntity: Person::class)]
     private Collection $people;
 
@@ -67,10 +68,9 @@ class Address
             // set the owning side to null (unless already changed)
             if ($person->getAddress() === $this) {
                 $person->setAddress(null);
+
             }
         }
-
         return $this;
     }
-
 }
